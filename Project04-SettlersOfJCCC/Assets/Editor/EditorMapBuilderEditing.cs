@@ -72,7 +72,7 @@ public class EditorMapBuilderEditing : EditorMapBuilder
     //Exports level data
     public static void Export(ResourceTypes[] tile)
     {
-        if (levelName != null && authorName != null)
+        if (levelName != null && authorName != null && tile != null)
         {
             tiles = new string[tile.Length];
             int numLines = 2;
@@ -89,7 +89,6 @@ public class EditorMapBuilderEditing : EditorMapBuilder
             StreamWriter sw = new StreamWriter(path);
             for (int i = 0; i <= numLines; i++)
             {
-                Debug.Log(line);
                 if (line == 0)
                 {
                     sw.WriteLine(levelName);
@@ -113,7 +112,7 @@ public class EditorMapBuilderEditing : EditorMapBuilder
         }
         else
         {
-            Debug.Log("No level name and/or no author name");
+            Debug.Log("No Level NSame / No Author Name / Generate Map Button Hasn't Been Clicked");
         }
     }
 }
