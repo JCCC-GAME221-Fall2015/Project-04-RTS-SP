@@ -28,6 +28,7 @@ public class PlayerUIController : MonoBehaviour
 	public Text Phase4;
 	public Text Phase5;
 	public Text Phase6;
+	public Text playerName;
 
 	private GameObject diceRollPanel;
 	private GameControlScript gameControlScript;
@@ -40,7 +41,7 @@ public class PlayerUIController : MonoBehaviour
 		buildRoad.interactable = false;
     }
 
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	// Use this for initialization
 	void Start()
 	{
@@ -50,6 +51,10 @@ public class PlayerUIController : MonoBehaviour
 		DisplayVictoryMessage(false);
 		DisplayLossMessage(false);
 		DisablePhaseNumbers();
+		if (HelperScript.playerName != null && HelperScript.playerName.Length > 0)
+			playerName.text = HelperScript.playerName.ToString();
+		else
+			playerName.text = "Guest Player";
 	}
 	
 	// Update is called once per frame
@@ -68,31 +73,31 @@ public class PlayerUIController : MonoBehaviour
         sheepAmount.text = sheep.ToString();
     }
 
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void DisplayDiceRoll(bool displayOn)
 	{
 		diceRollPanel.SetActive(displayOn);
 	}
 	
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void DisplayDiceValue(int diceValue)
 	{
 		diceText.text = diceValue.ToString();
 	}
 	
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void DisplayVictoryMessage(bool displayOn)
 	{
 		victoryText.enabled = displayOn;
 	}
 
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void DisplayLossMessage(bool displayOn)
 	{
 		lossText.enabled = displayOn;
 	}
 	
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void DisplayPhaseNumber(int phaseNumber, bool displayOn)
 	{
 		switch (phaseNumber)
@@ -121,7 +126,7 @@ public class PlayerUIController : MonoBehaviour
 		}
 	} // end method DisplayPhaseNumber
 	
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void DisablePhaseNumbers()
 	{
 		for (int i = 0; i <= 6; i++)
@@ -130,7 +135,7 @@ public class PlayerUIController : MonoBehaviour
 		}
 	}
 
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void DisplayPlayerResources(int pPlayerGrain, int pPlayerWood, int pPlayerBrick, int pPlayerWool)
 	{
 		grain = pPlayerGrain;
@@ -139,19 +144,19 @@ public class PlayerUIController : MonoBehaviour
 		sheep = pPlayerWool;
 	} // end method DisplayPlayerResources
 
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void EnableBuildSettlementButton(bool buttonOn)
 	{
 		buildSettlement.interactable = buttonOn;
 	}
 	
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void EnableBuildRoadButton(bool buttonOn)
 	{
 		buildRoad.interactable = buttonOn;
 	}
 	
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void EnableRollDiceButton(bool buttonOn)
 	{
 		rollDice.interactable = buttonOn;
@@ -196,14 +201,14 @@ public class PlayerUIController : MonoBehaviour
 		brick--;
 	}
 
-	// Author: Craig Broskow
+	// @author: Craig Broskow
 	public void RollDiceOnClick()
 	{
 		Debug.Log("Roll Dice");
 		gameControlScript.SetGamePhase(1, "None");
 	}
 	
-	// Author: Craig Broskow
+// @author: Craig Broskow
 	public void QuitGame ()
 	{
 		Application.Quit();

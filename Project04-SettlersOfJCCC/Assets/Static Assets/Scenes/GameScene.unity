@@ -605,6 +605,7 @@ MonoBehaviour:
   Phase4: {fileID: 186540519}
   Phase5: {fileID: 1387362293}
   Phase6: {fileID: 718814484}
+  playerName: {fileID: 364980623}
 --- !u!1 &186540518
 GameObject:
   m_ObjectHideFlags: 0

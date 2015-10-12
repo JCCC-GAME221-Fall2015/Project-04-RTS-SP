@@ -1,5 +1,5 @@
 ﻿// GameControlScript.cs
-// Author: Craig Broskow
+// @author: Craig Broskow
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,7 +49,11 @@ public class GameControlScript : MonoBehaviour {
 		playerList = new List<PlayerDataScript>();
 
 		PlayerDataScript tempPlayerData = new PlayerDataScript();
-		tempPlayerData.playerName = "Test Player"; // HelperScript.playerName
+
+		if (HelperScript.playerName != null && HelperScript.playerName.Length > 0)
+			tempPlayerData.playerName = HelperScript.playerName;
+		else
+			tempPlayerData.playerName = "Guest Player";
 		tempPlayerData.playerNumber = playerList.Count + 1;
 		tempPlayerData.playerColor = "Yellow"; // HelperScript.playerColor
 		tempPlayerData.playerHexList = new List<HexDataScript>();
@@ -64,11 +68,6 @@ public class GameControlScript : MonoBehaviour {
 
 		settList = new List<SettDataScript>();
 		roadList = new List<RoadDataScript>();
-
-//		HelperScript.LoadMapNames();
-//		LogMapNames();
-//		HelperScript.LoadGameNames();
-//		LogGameNames();
 
 		currentPhase = 0;
 		currentSubphase = "None";
@@ -234,26 +233,18 @@ public class GameControlScript : MonoBehaviour {
 				case (int)ResourceTypes.BRICK:
 					playerList[0].playerBrick++;
 					addedResource = true;
-					outputString = "Hex ID " + pHexID.ToString() + " has brick!";
-					Debug.Log(outputString);
 					break;
 				case (int)ResourceTypes.GRAIN:
 					playerList[0].playerGrain++;
 					addedResource = true;
-					outputString = "Hex ID " + pHexID.ToString() + " has grain!";
-					Debug.Log(outputString);
 					break;
 				case (int)ResourceTypes.WOOD:
 					playerList[0].playerWood++;
 					addedResource = true;
-					outputString = "Hex ID " + pHexID.ToString() + " has wood!";
-					Debug.Log(outputString);
 					break;
 				case (int)ResourceTypes.WOOL:
 					playerList[0].playerWool++;
 					addedResource = true;
-					outputString = "Hex ID " + pHexID.ToString() + " has wool!";
-					Debug.Log(outputString);
 					break;
 			} // end switch
 		} // end foreach (int pHexID in hexIDs)...
@@ -368,7 +359,6 @@ public class GameControlScript : MonoBehaviour {
 		tempSettlementData.settHexNeighbors = CalcHexNeighbors(vertexPosition, lowVertex);
 		settList.Add(tempSettlementData);
 
-		Debug.Log("Settlement Count: " + settList.Count.ToString());
 		tempSettlementData.LogSettlementData();
 
 		HelperScript.enableSettlements = false; // turn off settlement adding
@@ -421,9 +411,6 @@ public class GameControlScript : MonoBehaviour {
 				if ((hexData.hexDataPosition - tempHexPositions[i]).magnitude < MAX_VECTOR_DIFF)
 				{
 					tempNeighbors[i] = hexData.hexDataID;
-					Debug.Log("Matching Hex positions: ");
-					Debug.Log(hexData.hexDataPosition.ToString());
-					Debug.Log(tempHexPositions[i].ToString());
 				}
 			}
 		}
@@ -462,9 +449,6 @@ public class GameControlScript : MonoBehaviour {
 			{
 				if ((roadData.roadDataPosition - tempRoadPositions[i]).magnitude < MAX_VECTOR_DIFF)
 				{
-					Debug.Log("Matching Road positions: ");
-					Debug.Log(roadData.roadDataPosition.ToString());
-					Debug.Log(tempRoadPositions[i].ToString());
 					if (roadData.roadDataPlayer == playerList[0].playerName)
 						return true;
 				}
@@ -563,7 +547,6 @@ public class GameControlScript : MonoBehaviour {
 		tempRoadData.roadHexNeighbors = CalcRoadHexNeighbors(roadPosition, roadRotation);
 		roadList.Add(tempRoadData);
 		
-		Debug.Log("Road Count: " + roadList.Count.ToString());
 		tempRoadData.LogRoadData();
 
 		HelperScript.enableRoads = false; // turn off road adding
@@ -619,9 +602,6 @@ public class GameControlScript : MonoBehaviour {
 				if ((hexData.hexDataPosition - tempHexPositions[i]).magnitude < MAX_VECTOR_DIFF)
 				{
 					tempNeighbors[i] = hexData.hexDataID;
-					Debug.Log("Matching Hex positions: ");
-					Debug.Log(hexData.hexDataPosition.ToString());
-					Debug.Log(tempHexPositions[i].ToString());
 				}
 			}
 		}
@@ -649,11 +629,7 @@ public class GameControlScript : MonoBehaviour {
 		
 		victoryPoints = (int)System.Math.Ceiling(1.25d * playerList.Count);
 		currentPoints = settList.Count;
-		outputString = "Current points: " + currentPoints.ToString() +
-			"  Victory points: " + victoryPoints.ToString();
-		Debug.Log(outputString);
 
-//		UIControllerScript.DisplayVictoryMessage(true);
 		if (currentPoints >= victoryPoints)
 		{
 			UIControllerScript.DisplayVictoryMessage(true);

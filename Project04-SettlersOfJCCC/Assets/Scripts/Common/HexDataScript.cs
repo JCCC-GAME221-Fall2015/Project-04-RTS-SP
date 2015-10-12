@@ -1,5 +1,5 @@
 ﻿// HexDataScript.cs
-// Author: Craig Broskow
+// @author: Craig Broskow
 using UnityEngine;
 using System.Collections;
 
