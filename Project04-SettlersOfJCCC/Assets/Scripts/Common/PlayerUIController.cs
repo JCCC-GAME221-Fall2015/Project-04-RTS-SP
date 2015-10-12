@@ -3,8 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 
 /// <summary>
-/// @author Jake Skov
-/// @desc 
+/// @author Jake Skov & Craig Broskow
+/// @desc Displays relevent resource counts to the player and creates the OnClick methods for all player interactable buttons
 /// </summary>
 public class PlayerUIController : MonoBehaviour 
 {
