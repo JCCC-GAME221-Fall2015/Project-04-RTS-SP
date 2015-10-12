@@ -33,7 +33,6 @@ public class AddRoadsAndSettlements : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameControlScript = GameObject.FindGameObjectWithTag("GameControllerObject").GetComponent<GameControlScript>();
-//		gameControlScript = Camera.main.GetComponent<GameControlScript>();
 	}
 	
 	// Update is called once per frame

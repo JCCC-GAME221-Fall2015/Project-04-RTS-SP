@@ -16,17 +16,11 @@ public class GameControlScript : MonoBehaviour {
 	private List<RoadDataScript> roadList;
 
 	private int currentPhase = -1; // should be 0 (minimum) through 6 (maximum)
+	private string currentSubphase; // Subphase is not used in all phases of the game
 	private string currentPlayer; // should be the name of one of the players in the playerList
 
 	private bool currentPhaseDone = false;
 	private bool gameOver = false;
-//	private bool phase0Done = true;
-//	private bool phase1Done = true;
-//	private bool phase2Done = true;
-//	private bool phase3Done = true;
-//	private bool phase4Done = true;
-//	private bool phase5Done = true;
-//	private bool phase6Done = true;
 	private PlayerUIController UIControllerScript;
 	private int diceRollValue = 0; // should be 1 (minimum) through 6 (maximum)
 
@@ -39,8 +33,6 @@ public class GameControlScript : MonoBehaviour {
 		HelperScript.enableSettlements = false;  // public static variable
 		hexList = gameObject.GetComponent<MapDataScript>().LoadMapData();
 		UIControllerScript = Camera.main.GetComponent<PlayerUIController>();
-//		UIControllerScript.DisplayDiceRoll(true);
-//		UIControllerScript.DisplayDiceValue(3);
 
 		if (hexList != null)
 		{
@@ -79,12 +71,14 @@ public class GameControlScript : MonoBehaviour {
 //		LogGameNames();
 
 		currentPhase = 0;
+		currentSubphase = "None";
 		RunGame();
 	} // end method Start
 	
-	public void SetGamePhase(int pGamePhase)
+	public void SetGamePhase(int pGamePhase, string pSubphase)
 	{
 		currentPhase = pGamePhase;
+		currentSubphase = pSubphase;
 		RunGame();
 	}
 
@@ -92,21 +86,35 @@ public class GameControlScript : MonoBehaviour {
 	{
 		string outputString = "";
 
+		UIControllerScript.DisablePhaseNumbers();
 		switch (currentPhase)
 		{
 			case 0:
+				UIControllerScript.DisplayPhaseNumber(0, true);
 				StartCoroutine("RunPhase0");
 				break;
 			case 1:
+				UIControllerScript.DisplayPhaseNumber(1, true);
 				StartCoroutine("RunPhase1");
 				break;
 			case 2:
-//			StartCoroutine("RunPhase1");
-				outputString = "Starting Phase 2!";
-				Debug.Log(outputString);
+				UIControllerScript.DisplayPhaseNumber(2, true);
+				break;
+			case 3:
+				UIControllerScript.DisplayPhaseNumber(3, true);
+				StartCoroutine("RunPhase3");
+				break;
+			case 4:
+				UIControllerScript.DisplayPhaseNumber(4, true);
+				break;
+			case 5:
+				UIControllerScript.DisplayPhaseNumber(5, true);
+				break;
+			case 6:
+				UIControllerScript.DisplayPhaseNumber(6, true);
 				break;
 			default:
-				outputString = "Game is over!  Thank you for playing!";
+				outputString = "Game is running an unknown phase!";
 				Debug.Log(outputString);
 				break;
 		}
@@ -143,6 +151,42 @@ public class GameControlScript : MonoBehaviour {
 		UIControllerScript.EnableRollDiceButton(true);
 		currentPhaseDone = true;
 	} // end method RunPhase1
+
+	IEnumerator RunPhase3()
+	{
+		int currentRoadCount;
+		int currentSettCount;
+		
+		currentPhaseDone = false;
+		if (currentSubphase == "BuildRoad")
+		{
+			UIControllerScript.EnableBuildRoadButton(false);
+			currentRoadCount = roadList.Count;
+			HelperScript.enableRoads = true;
+			while (roadList.Count == currentRoadCount)
+			{
+				if (roadList.Count > currentRoadCount)
+					HelperScript.enableRoads = false;
+				yield return new WaitForSeconds(.1f);
+			}
+			currentSubphase = "None";
+		}
+		else if (currentSubphase == "BuildSettlement")
+		{
+			UIControllerScript.EnableBuildSettlementButton(false);
+			currentSettCount = settList.Count;
+			HelperScript.enableSettlements = true;
+			while (settList.Count == currentSettCount)
+			{
+				if (settList.Count > currentSettCount)
+					HelperScript.enableSettlements = false;
+				yield return new WaitForSeconds(.1f);
+			}
+			currentSubphase = "None";
+		}
+		gameOver = CheckForVictory();
+		currentPhaseDone = true;
+	} // end method RunPhase3
 
 	IEnumerator RunDiceRoll()
 	{
@@ -524,7 +568,7 @@ public class GameControlScript : MonoBehaviour {
 
 		HelperScript.enableRoads = false; // turn off road adding
 	} // end method AddRoad
-	
+
 	private bool RoadPositionEmpty(Vector3 pNewPosition)
 	{
 		const float MAX_VECTOR_DIFF = 0.01f;
@@ -596,6 +640,28 @@ public class GameControlScript : MonoBehaviour {
 			RunGame();
 		}
 	}
+
+	private bool CheckForVictory()
+	{
+		int victoryPoints;
+		int currentPoints;
+		string outputString;
+		
+		victoryPoints = (int)System.Math.Ceiling(1.25d * playerList.Count);
+		currentPoints = settList.Count;
+		outputString = "Current points: " + currentPoints.ToString() +
+			"  Victory points: " + victoryPoints.ToString();
+		Debug.Log(outputString);
+
+//		UIControllerScript.DisplayVictoryMessage(true);
+		if (currentPoints >= victoryPoints)
+		{
+			UIControllerScript.DisplayVictoryMessage(true);
+			return true;
+		}
+		else
+			return false;
+	} // end method CheckForVictory
 
 	private void LogMapNames()
 	{

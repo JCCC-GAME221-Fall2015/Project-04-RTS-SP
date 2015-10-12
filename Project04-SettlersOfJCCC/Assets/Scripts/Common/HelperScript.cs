@@ -17,7 +17,7 @@ public static class HelperScript
 	// list of map files (strings)...map/filenames
 	public static List<string> mapList;
 	
-	// list of map files (strings)...map/filenames
+	// list of saved game files (strings)...game/filenames
 	public static List<string> gameList;
 	
 	// Variables to establish player parameters (single-player for now)
