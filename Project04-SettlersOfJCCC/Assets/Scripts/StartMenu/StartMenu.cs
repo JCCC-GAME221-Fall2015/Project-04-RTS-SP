@@ -10,8 +10,8 @@ public class StartMenu : MonoBehaviour
 
     public void LoadGameMenu()
     {
-        Application.LoadLevel(3);
-    }
+		Application.LoadLevel(2);
+	}
 
     public void ExitGame()
     {

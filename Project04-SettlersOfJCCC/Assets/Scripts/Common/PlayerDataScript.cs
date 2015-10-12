@@ -1,18 +1,11 @@
 ﻿// PlayerDataScript.cs
-// Author: Craig Broskow
+// @author: Craig Broskow
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerDataScript
 {
-// ALSO NEED:
-	// list of player settlements
-	// list of player roads
-	// list of player resources
-	// list of ALL settlements
-	// list of ALL roads
-	// list of ALL resources
 
 	public string playerName;
 	public int playerNumber;
@@ -32,19 +25,6 @@ public class PlayerDataScript
 		playerBrick = 0;
 		playerWool = 0;
 	}
-	
-//	public void UpdatePlayerResources(int pPlayerGrain, int pPlayerWood, int pPlayerBrick, int pPlayerWool)
-//	{
-//		playerGrain = pPlayerGrain;
-//		playerWood = pPlayerWood;
-//		playerBrick = pPlayerBrick;
-//		playerWool = pPlayerWool;
-//	}
-
-	// Update is called once per frame
-	//	void Update () {
-	//	
-	//	}
 
 	public void LogPlayerData()
 	{

@@ -1,5 +1,5 @@
 ﻿// HelperScript.cs
-// Author: Craig Broskow
+// @author: Craig Broskow
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,29 +25,20 @@ public static class HelperScript
 	public static string playerName;
 	public static string playerMapSelection;
 	public static string playerMenuSelection;
-	//	public static int playerNumber;
 
 	// Variables to enable game functions
 	public static bool enableRoads;
 	public static bool enableSettlements;
-//	public static string playerPhase;
-	
+
 	public static void LoadMapNames()
 	{
 		mapList = new List<string>();
 		
-		mapList.Add("Awesome Map");
-		mapList.Add("Difficult Map");
-		mapList.Add("Mediocre Map");
-		mapList.Add("Horrible Map");
+		mapList.Add("Default");
+		mapList.Add("Ring");
+		mapList.Add("TopHeavy");
+		mapList.Add("BottomHeavy");
 	} // end method LoadMapNames
-	
-//	public static void LogMapNames()
-//	{
-//		foreach (string mapName in mapList) {
-//			Debug.Log (mapName);
-//		}
-//	} // end method LogMapNames
 	
 	public static void LoadGameNames()
 	{
@@ -58,11 +49,4 @@ public static class HelperScript
 		gameList.Add("GameName:'Mediocre Game', PlayerName:'Player 3'");
 		gameList.Add("GameName:'Horrible Game', PlayerName:'Player 4'");
 	} // end method LoadGameNames
-	
-//	public static void LogGameNames()
-//	{
-//		foreach (string gameName in gameList) {
-//			Debug.Log (gameName);
-//		}
-//	} // end method LogGameNames
 } // end class HelperScript

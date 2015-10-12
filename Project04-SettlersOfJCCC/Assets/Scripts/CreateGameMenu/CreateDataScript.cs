@@ -8,7 +8,6 @@ public class CreateDataScript : MonoBehaviour
 
     public static bool showWindow;
 
-    string mapName = "Map name";
     string playerName = "Player name";
     Rect windowRect = new Rect(Screen.width / 2 - 150, Screen.height / 2 - 75, 300, 100);
 
@@ -40,12 +39,6 @@ public class CreateDataScript : MonoBehaviour
 
     void GetInfo(int windowID)
     {
-        Rect mapPrefixRect = new Rect(8, DY, 96, DY);
-        GUI.Label(mapPrefixRect, "Map name: ");
-
-        Rect mapNameRect = new Rect(96, DY, windowRect.width - 104, DY);
-        mapName = GUI.TextField(mapNameRect, mapName);
-
         Rect playerPrefixRect = new Rect(8, DY * 2 + 5, 108, DY);
         GUI.Label(playerPrefixRect, "Player name: ");
 
@@ -55,6 +48,10 @@ public class CreateDataScript : MonoBehaviour
         Rect gotoGameRect = new Rect(8, DY * 3 + 15, 96, DY);
         if(GUI.Button(gotoGameRect, "Start Game"))
         {
+			if (playerName.Length > 0)
+				HelperScript.playerName = playerName;
+			else
+				HelperScript.playerName = "Guest Player";
             Application.LoadLevel(3);
         }
 
