@@ -1,0 +1,4 @@
+Textures applied to models/changed at runtime go here.
+UI textures and 2D sprites also go here.
+Create folders for scenes where textures appear.
+Textures used in multiple scenes go in common.

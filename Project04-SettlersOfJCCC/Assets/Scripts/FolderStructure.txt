@@ -1,0 +1,1 @@
+All other scripts go here. Make sure to place common scripts (shared across scenes) in the common folder.

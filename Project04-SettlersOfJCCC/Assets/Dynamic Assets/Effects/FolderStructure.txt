@@ -1,0 +1,2 @@
+Particle effects loaded at runtime go here.
+Make folders for each particle effect.

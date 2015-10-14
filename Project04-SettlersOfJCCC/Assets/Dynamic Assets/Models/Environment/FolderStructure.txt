@@ -1,0 +1,3 @@
+All models loaded at runtime for environmental object models go here.
+Create folders for models used only in specific scenes.
+Use common for models used in multiple scenes.

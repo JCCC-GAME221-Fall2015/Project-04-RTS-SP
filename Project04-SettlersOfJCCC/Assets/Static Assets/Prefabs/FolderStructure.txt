@@ -1,0 +1,3 @@
+Prefab objects not loaded at runtime go here.
+Make sure to create new folders for scenes.
+Prefabs shared across scenes go in common.

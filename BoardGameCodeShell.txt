@@ -1,0 +1,79 @@
+// Board Game code written by Andrew Seba
+
+IEnumerator WaitForChoice()
+{
+	while(waitingForChoice)
+	{
+		if(Input.GetMouseButton(0))
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit[] hits;
+			hits = Physics.RaycastAll(ray, 100f);
+			
+			for(int i = 0; i < hits.Length; i++)
+			{
+				if(SpotsYouCanMoveTo.Contains(hits[i].collider.gameObject))
+				{
+					spotSelection = hits[i].collider.gameObject;
+					waitingForChoice = false;
+				}
+			}
+		}
+		yield return null;
+	}
+}
+
+void Update()
+{
+	if(mode == turnModes.WELCOME && changeTurnMode)
+	{
+		changeTurnMode = false;
+		
+		// If at home and done playing
+		if(donePlaying)
+		{
+			changeTurnMode = true;
+			mode = turnModes.ENDTURN;
+		}
+		else
+		{
+			Welcome();
+			
+			// If next turn is skipped
+			if(skipTurn)
+			{
+				skipTurn = false;
+				mode = turnModes.ENDTURN;
+				changeTurnMode = true;
+			}
+			else
+			{
+				mode = turnModes.DICEROLL;
+			}
+		}
+	}
+	if(mode == turnModes.DICEROLL && changeTurnMode)
+	{
+		StartCoroutine("DiceRoll");
+		changeTurnMode = false;
+		mode = turnModes.MOVE;
+	}
+	if(mode == turnModes.MOVE && changeTurnMode)
+	{
+		StartCoroutine("Move");
+		changeTurnMode = false;
+		mode = turnModes.DRAWCARD;
+	}
+	if(mode == turnModes.DRAWCARD && changeTurnMode)
+	{
+		StartCoroutine("DrawCard");
+		changeTurnMode = false;
+		mode = turnModes.ENDTURN;
+	}
+	if(mode == turnModes.ENDTURN && changeTurnMode)
+	{
+		changeTurnMode = false;
+		mode = turnModes.WELCOME;
+		ScriptGameController.EndPlayerTurn();
+	}
+}

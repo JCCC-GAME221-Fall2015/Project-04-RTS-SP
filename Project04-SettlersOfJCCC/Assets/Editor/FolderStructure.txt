@@ -1,0 +1,1 @@
+All scripts that edit the editor go here.

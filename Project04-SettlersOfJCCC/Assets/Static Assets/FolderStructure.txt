@@ -1,0 +1,1 @@
+All assets not loaded into the game at runtime go here.

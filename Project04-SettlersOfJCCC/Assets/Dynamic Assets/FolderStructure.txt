@@ -1,0 +1,1 @@
+All assets that are loaded into the game at runtime go here.
